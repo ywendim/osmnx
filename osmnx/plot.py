@@ -344,6 +344,14 @@ def plot_graph_route(
         fig, ax = plot_graph(G, show=False, save=False, close=False, **kwargs)
     else:
         fig = ax.figure  # type: ignore[assignment]
+        
+    # Handling case route=[]
+    # if route is empty route=[]
+    if len(route) < 1:
+        overrides = {"show", "save", "close"}
+        kwargs = {k: v for k, v in pg_kwargs.items() if k not in overrides}
+        ax = plot_graph(G, show=False, save=False, close=False, **kwargs)       
+
 
     # scatterplot origin and destination points (first/last nodes in route)
     od_x = (G.nodes[route[0]]["x"], G.nodes[route[-1]]["x"])
